@@ -1,0 +1,10 @@
+*.iml
+*.idea
+out
+.idea
+bin
+.idea/*
+./*.iml
+target
+src/test
+.idea
