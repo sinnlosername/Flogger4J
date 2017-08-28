@@ -15,9 +15,9 @@ import java.util.List;
  * Created by Florian on 05.06.17 in me.flo.flogger
  */
 @RequiredArgsConstructor
-public class Flogger {
-
-    private static Flogger global;
+public class FLogger {
+    
+    private static FLogger global;
 
     @Getter
     private final String name;
@@ -39,6 +39,7 @@ public class Flogger {
     public void error(String message) {
         log(FlogLevel.ERROR, message);
     }
+
     public void warning(String message) {
         log(FlogLevel.WARNING, message);
     }
@@ -59,11 +60,11 @@ public class Flogger {
         publishers.add(publisher);
     }
 
-    public static void initializeGlobal(final String name) {
-        global = new Flogger(name);
+    public static FLogger initializeGlobal(final String name) {
+        return global = new FLogger(name);
     }
 
-    public static Flogger global() {
+    public static FLogger global() {
         return global;
     }
 
