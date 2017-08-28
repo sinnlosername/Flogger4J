@@ -1,6 +1,6 @@
 Example:
 
-```
+```JAVA
 //Global logger
 FLogger glogger = FLogger.initializeGlobal("Global"); //You can get it with FLogger.global() later
 
