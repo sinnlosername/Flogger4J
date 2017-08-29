@@ -6,7 +6,7 @@ package me.flo.flogger.types;
 public enum FlogLevel {
     OFF,
     ERROR,
-    WARNING,
+    WARN,
     INFO,
     DEBUG,
     TRACE;

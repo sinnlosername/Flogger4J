@@ -3,6 +3,7 @@ package me.flo.flogger;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import me.flo.flogger.impl.FlogConsolePublisher;
 import me.flo.flogger.types.FlogFormatter;
 import me.flo.flogger.types.FlogLevel;
 import me.flo.flogger.types.FlogPublisher;
@@ -16,7 +17,16 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 public class FLogger {
-    
+
+    public static void main(String[] args) {
+        FLogger log = FLogger.initializeGlobal("Hurensohn");
+        log.addPublisher(new FlogConsolePublisher());
+
+        log.info("Hi");
+        log.error("Steven is in your anydesk.");
+
+    }
+
     private static FLogger global;
 
     @Getter
@@ -41,7 +51,7 @@ public class FLogger {
     }
 
     public void warning(String message) {
-        log(FlogLevel.WARNING, message);
+        log(FlogLevel.WARN, message);
     }
 
     public void info(String message) {
