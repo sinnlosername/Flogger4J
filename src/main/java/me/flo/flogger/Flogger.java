@@ -18,15 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FLogger {
 
-    public static void main(String[] args) {
-        FLogger log = FLogger.initializeGlobal("Hurensohn");
-        log.addPublisher(new FlogConsolePublisher());
-
-        log.info("Hi");
-        log.error("Steven is in your anydesk.");
-
-    }
-
     private static FLogger global;
 
     @Getter
