@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import me.flo.flogger.FLogger;
+import me.flo.flogger.Flogger4J;
 
 /**
  * Created by Florian on 05.06.17 in me.flo.flogger
@@ -14,7 +14,7 @@ import me.flo.flogger.FLogger;
 public class FlogRecord {
 
     @Getter
-    private final FLogger flogger;
+    private final Flogger4J flogger;
     @Setter @Getter
     private FlogLevel level;
     @Setter @Getter
