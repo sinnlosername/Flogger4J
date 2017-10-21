@@ -5,12 +5,14 @@ import lombok.Getter;
 /**
  * Created by Florian on 05.06.17 in me.flo.flogger
  */
+@Getter
 public abstract class FlogPublisher {
 
-    @Getter
-    private FlogLevel level;
 
-    public void handleIntern(FlogRecord record, FlogFormatter formatter) {
+    private FlogLevel level;
+    private FlogFormatter formatter;
+
+    public void handleIntern(FlogRecord record) {
         if (!record.getLevel().isLoggable(level)) return;
         handle(record, formatter);
     }
@@ -22,4 +24,8 @@ public abstract class FlogPublisher {
         return this;
     }
 
+    public FlogPublisher formatter(FlogFormatter formatter) {
+        this.formatter = formatter;
+        return this;
+    }
 }

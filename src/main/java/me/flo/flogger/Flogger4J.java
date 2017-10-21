@@ -32,7 +32,7 @@ public class Flogger4J {
 
         final FlogRecord record = new FlogRecord(this, level, message, System.currentTimeMillis());
 
-        publishers.forEach(fp -> fp.handleIntern(record, formatter));
+        publishers.forEach(fp -> fp.handleIntern(record));
     }
 
     public void error(String message) {
@@ -56,7 +56,8 @@ public class Flogger4J {
     }
 
     public void addPublisher(FlogPublisher publisher) {
-        if (publisher.getLevel() == null) publisher.level(level);
+        if (publisher.getLevel() == null) publisher.level(this.level);
+        if (publisher.getFormatter() == null) publisher.formatter(this.formatter);
         publishers.add(publisher);
     }
 
