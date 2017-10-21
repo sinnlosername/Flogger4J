@@ -29,11 +29,10 @@ public class Flogger4J {
 
     public void log(FlogLevel level, String message) {
         if (level == FlogLevel.OFF) throw new IllegalArgumentException("Level can't be OFF");
-        if (!level.isLoggable(this.level)) return;
 
         final FlogRecord record = new FlogRecord(this, level, message, System.currentTimeMillis());
 
-        publishers.forEach(fp -> fp.handle(record, formatter));
+        publishers.forEach(fp -> fp.handleIntern(record, formatter));
     }
 
     public void error(String message) {
@@ -57,6 +56,7 @@ public class Flogger4J {
     }
 
     public void addPublisher(FlogPublisher publisher) {
+        if (publisher.getLevel() == null) publisher.level(level);
         publishers.add(publisher);
     }
 

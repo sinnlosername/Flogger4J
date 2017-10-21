@@ -8,7 +8,7 @@ import me.flo.flogger.types.FlogRecord;
 /**
  * Created by Florian on 05.06.17 in me.flo.flogger.impl
  */
-public final class LogConsolePublisher implements FlogPublisher {
+public final class LogConsolePublisher extends FlogPublisher {
 
     @Override
     public void handle(FlogRecord record, FlogFormatter formatter) {

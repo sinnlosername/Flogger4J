@@ -11,7 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * Created by Florian on 05.06.17 in me.flo.flogger.impl
  */
-public abstract class AsyncLogWriterPublisher implements FlogPublisher, Runnable {
+public abstract class AsyncLogWriterPublisher extends FlogPublisher implements Runnable {
 
     private final LogWriterPublisher publisher;
     private final BlockingQueue<Object[]> queue;
@@ -19,7 +19,6 @@ public abstract class AsyncLogWriterPublisher implements FlogPublisher, Runnable
     public AsyncLogWriterPublisher(final LogWriterPublisher publisher, final int queueSize) {
         this.publisher = publisher;
         this.queue = queueSize == -1 ? new LinkedBlockingQueue<>() : new ArrayBlockingQueue<>(queueSize);
-
     }
 
     @Override

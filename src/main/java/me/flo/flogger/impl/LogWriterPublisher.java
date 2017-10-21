@@ -13,7 +13,7 @@ import java.io.Writer;
  * Created by Florian on 05.06.17 in me.flo.flogger.impl
  */
 @AllArgsConstructor
-public class LogWriterPublisher implements FlogPublisher {
+public class LogWriterPublisher extends FlogPublisher {
 
     protected Writer writer;
 

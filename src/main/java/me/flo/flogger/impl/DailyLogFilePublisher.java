@@ -17,16 +17,18 @@ public class DailyLogFilePublisher extends LogWriterPublisher  {
 
     private static final SimpleDateFormat format = new SimpleDateFormat("dd-MM-YYYY");
     private final File dir;
+    private File file;
     private int lastDayOfMonth = -1;
 
 
     public DailyLogFilePublisher(final File directory) throws IOException {
-        super(newFileWriter(directory));
+        super(new FileWriter(newFile(directory)));
+        file = newFile(directory);
         this.dir = directory;
     }
 
-    private static FileWriter newFileWriter(final File dir) throws IOException {
-        return new FileWriter(new File(dir, format.format(new Date(System.currentTimeMillis())) + ".log"));
+    private static File newFile(final File dir) throws IOException {
+        return new File(dir, format.format(new Date(System.currentTimeMillis())) + ".log");
     }
 
     @Override
@@ -36,7 +38,10 @@ public class DailyLogFilePublisher extends LogWriterPublisher  {
         if (lastDayOfMonth != -1 && lastDayOfMonth != date.getDayOfMonth()) {
             try {
                 writer.close();
-                writer = newFileWriter(dir);
+
+                writer = new FileWriter(newFile(dir));
+
+                writerSwitched((FileWriter) writer, file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -46,5 +51,8 @@ public class DailyLogFilePublisher extends LogWriterPublisher  {
 
         super.handle(record, formatter);
     }
+
+    @SuppressWarnings("unused")
+    protected void writerSwitched(final FileWriter newWriter, final File oldFile) {}
 
 }
