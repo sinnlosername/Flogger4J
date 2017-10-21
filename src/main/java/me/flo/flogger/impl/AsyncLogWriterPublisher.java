@@ -19,6 +19,7 @@ public abstract class AsyncLogWriterPublisher extends FlogPublisher implements R
     public AsyncLogWriterPublisher(final LogWriterPublisher publisher, final int queueSize) {
         this.publisher = publisher;
         this.queue = queueSize == -1 ? new LinkedBlockingQueue<>() : new ArrayBlockingQueue<>(queueSize);
+        startAsync(this);
     }
 
     @Override
