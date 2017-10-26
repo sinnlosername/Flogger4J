@@ -39,7 +39,11 @@ public class DailyLogFilePublisher extends LogWriterPublisher  {
             try {
                 writer.close();
 
-                writer = new FileWriter(newFile(dir));
+                final File f = newFile(dir);
+
+                if (!f.exists()) f.createNewFile();
+
+                writer = new FileWriter(f);
 
                 writerSwitched((FileWriter) writer, file);
             } catch (IOException e) {
