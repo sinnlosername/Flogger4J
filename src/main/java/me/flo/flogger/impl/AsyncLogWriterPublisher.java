@@ -18,6 +18,7 @@ public abstract class AsyncLogWriterPublisher extends FlogPublisher implements R
 
     public AsyncLogWriterPublisher(final LogWriterPublisher publisher, final int queueSize) {
         this.publisher = publisher;
+
         this.queue = queueSize == -1 ? new LinkedBlockingQueue<>() : new ArrayBlockingQueue<>(queueSize);
         startAsync(this);
     }
@@ -29,7 +30,7 @@ public abstract class AsyncLogWriterPublisher extends FlogPublisher implements R
                 final Object[] array = queue.take();
                 publisher.handle((FlogRecord) array[0], (FlogFormatter) array[1]);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                new RuntimeException("FLOGGER CRASH", e).printStackTrace();
             }
         }
     }
