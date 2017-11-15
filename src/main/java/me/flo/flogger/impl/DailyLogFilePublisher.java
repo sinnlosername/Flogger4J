@@ -22,13 +22,15 @@ public class DailyLogFilePublisher extends LogWriterPublisher  {
 
 
     public DailyLogFilePublisher(final File directory) throws IOException {
-        super(new FileWriter(newFile(directory)));
+        super(new FileWriter(newFile(directory), true));
         file = newFile(directory);
         this.dir = directory;
     }
 
     private static File newFile(final File dir) throws IOException {
-        return new File(dir, format.format(new Date(System.currentTimeMillis())) + ".log");
+        File f = new File(dir, format.format(new Date(System.currentTimeMillis())) + ".log");
+        if (!f.exists()) f.createNewFile();
+        return f;
     }
 
     @Override
@@ -39,11 +41,7 @@ public class DailyLogFilePublisher extends LogWriterPublisher  {
             try {
                 writer.close();
 
-                final File f = newFile(dir);
-
-                if (!f.exists()) f.createNewFile();
-
-                writer = new FileWriter(f);
+                writer = new FileWriter(newFile(dir), true);
 
                 writerSwitched((FileWriter) writer, file);
             } catch (IOException e) {
