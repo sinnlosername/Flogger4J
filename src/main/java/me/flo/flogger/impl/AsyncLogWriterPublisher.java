@@ -28,6 +28,7 @@ public abstract class AsyncLogWriterPublisher extends FlogPublisher implements R
         while (publisher != null) {
             try {
                 final Object[] array = queue.take();
+                System.out.println("-1 queue element. Now: " + queue.size());
                 publisher.handle((FlogRecord) array[0], (FlogFormatter) array[1]);
             } catch (InterruptedException e) {
                 new RuntimeException("FLOGGER CRASH", e).printStackTrace();
