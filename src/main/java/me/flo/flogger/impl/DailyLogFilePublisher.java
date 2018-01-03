@@ -1,5 +1,6 @@
 package me.flo.flogger.impl;
 
+import lombok.Getter;
 import me.flo.flogger.types.FlogFormatter;
 import me.flo.flogger.types.FlogRecord;
 
@@ -17,13 +18,15 @@ public class DailyLogFilePublisher extends LogWriterPublisher  {
 
     private static final SimpleDateFormat format = new SimpleDateFormat("dd-MM-YYYY");
     private final File dir;
-    private File file;
+
+    @Getter
+    private File currentFile;
     private int lastDayOfMonth = -1;
 
 
     public DailyLogFilePublisher(final File directory) throws IOException {
         super(new FileWriter(newFile(directory), true));
-        file = newFile(directory);
+        currentFile = newFile(directory);
         this.dir = directory;
     }
 
@@ -41,9 +44,11 @@ public class DailyLogFilePublisher extends LogWriterPublisher  {
             try {
                 writer.close();
 
-                writer = new FileWriter(newFile(dir), true);
+                File nf = newFile(dir);
+                writer = new FileWriter(nf, true);
 
-                writerSwitched((FileWriter) writer, file);
+                writerSwitched((FileWriter) writer, currentFile);
+                currentFile = nf;
             } catch (IOException e) {
                 e.printStackTrace();
             }
