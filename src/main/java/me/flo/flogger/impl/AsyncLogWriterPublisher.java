@@ -25,6 +25,7 @@ public abstract class AsyncLogWriterPublisher extends FlogPublisher implements R
 
     @Override
     public void run() {
+        //noinspection LoopConditionNotUpdatedInsideLoop
         while (publisher != null) {
             try {
                 final Object[] array = queue.take();
