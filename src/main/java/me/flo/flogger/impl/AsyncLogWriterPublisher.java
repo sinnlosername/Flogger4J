@@ -15,6 +15,10 @@ public abstract class AsyncLogWriterPublisher extends FlogPublisher implements R
     private final LogWriterPublisher publisher;
     private final BlockingQueue<Object> queue;
 
+    public AsyncLogWriterPublisher(final LogWriterPublisher publisher) {
+        this(publisher, -1);
+    }
+
     public AsyncLogWriterPublisher(final LogWriterPublisher publisher, final int queueSize) {
         this.publisher = publisher;
 
@@ -24,20 +28,20 @@ public abstract class AsyncLogWriterPublisher extends FlogPublisher implements R
 
     @Override
     public void run() {
-        while (publisher != null) {
-            try {
-                final Object record = queue.take();
+        try {
+            Object record;
+            while ((record = queue.take()) != null) {
                 publisher.handle((FlogRecord) record);
-            } catch (InterruptedException e) {
-                new RuntimeException("FLOGGER CRASH", e).printStackTrace();
             }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 
     @Override
     public void handle(FlogRecord record) {
         if (!queue.offer(record))
-            throw new RuntimeException("No space left in logging queue.");
+            throw new RuntimeException("No space left in logging queue");
     }
 
     protected abstract void startAsync(final Runnable r);
