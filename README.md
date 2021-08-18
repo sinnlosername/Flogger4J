@@ -2,30 +2,29 @@ Example:
 
 ```JAVA
 //Global logger
-FLogger glogger = FLogger.initializeGlobal("Global"); //You can get it with FLogger.global() later
+Flogger4J logger = Flogger4J.initializeGlobal("Global"); //You can get it with FLogger.global() later
 
 //Add publishers
 
 /* Write log output into the System.out */
-glogger.addPublisher(new FlogConsolePublisher());
+logger.addPublisher(new LogConsolePublisher());
 
 /* Write log output to a writer */
-glogger.addPublisher(new FlogWriterPublisher(new FileWriter("/some/file")));
+logger.addPublisher(new LogWriterPublisher(new FileWriter("/some/file")));
 
 //Sending messages
-glogger.trace("Showing some example messages"); // Trace message
-glogger.info("Started!"); // Info messaage
-glogger.warning("Something doesn't work, like it should do."); // Warning
-glogger.error("Something went wrong"); // Error message
+logger.trace("Showing some example messages"); // Trace message
+logger.info("Started!"); // Info messaage
+logger.warning("Something doesn't work, like it should do."); // Warning
+logger.error("Something went wrong"); // Error message
 
 //Set your LogLevel
-glogger.setLevel(FlogLevel.ERROR); // Only errors & higher will be shown
+logger.setLevel(FlogLevel.ERROR); // Only errors & higher will be shown
 
 //Set your own logging format
-glogger.setFormatter(r -> "[" + r.getTimestamp() + "/"+r.getLevel().name()+"] " +
-"("+r.getFlogger().getName()+"): " + r.getMessage());
+logger.setFormatter(r -> "[" + r.getTimestamp() + "/"+r.getLevel().name()+"] " +
+        "("+r.getFlogger().getName()+"): " + r.getMessage());
 
-//This would look like: [1503944413949/INFO] (MyLogger): My message!
-glogger.info("My message!");
-
+//This would look like: [1503944413949/INFO] (MyLogger): Your message
+logger.info("Your message");
 ```
