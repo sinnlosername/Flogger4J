@@ -8,16 +8,15 @@ import lombok.Getter;
 @Getter
 public abstract class FlogPublisher {
 
-
     private FlogLevel level;
     private FlogFormatter formatter;
 
     public void handleIntern(FlogRecord record) {
         if (!record.getLevel().isLoggable(level)) return;
-        handle(record, formatter);
+        handle(record);
     }
 
-    protected abstract void handle(FlogRecord record, FlogFormatter formatter);
+    protected abstract void handle(FlogRecord record);
 
     public FlogPublisher level(FlogLevel level) {
         this.level = level;

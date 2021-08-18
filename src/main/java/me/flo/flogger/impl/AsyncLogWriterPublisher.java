@@ -1,6 +1,5 @@
 package me.flo.flogger.impl;
 
-import me.flo.flogger.types.FlogFormatter;
 import me.flo.flogger.types.FlogPublisher;
 import me.flo.flogger.types.FlogRecord;
 
@@ -14,7 +13,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public abstract class AsyncLogWriterPublisher extends FlogPublisher implements Runnable {
 
     private final LogWriterPublisher publisher;
-    private final BlockingQueue<Object[]> queue;
+    private final BlockingQueue<Object> queue;
 
     public AsyncLogWriterPublisher(final LogWriterPublisher publisher, final int queueSize) {
         this.publisher = publisher;
@@ -27,8 +26,8 @@ public abstract class AsyncLogWriterPublisher extends FlogPublisher implements R
     public void run() {
         while (publisher != null) {
             try {
-                final Object[] array = queue.take();
-                publisher.handle((FlogRecord) array[0], (FlogFormatter) array[1]);
+                final Object record = queue.take();
+                publisher.handle((FlogRecord) record);
             } catch (InterruptedException e) {
                 new RuntimeException("FLOGGER CRASH", e).printStackTrace();
             }
@@ -36,8 +35,8 @@ public abstract class AsyncLogWriterPublisher extends FlogPublisher implements R
     }
 
     @Override
-    public void handle(FlogRecord record, FlogFormatter formatter) {
-        if (!queue.offer(new Object[] {record, formatter}))
+    public void handle(FlogRecord record) {
+        if (!queue.offer(record))
             throw new RuntimeException("No space left in logging queue.");
     }
 

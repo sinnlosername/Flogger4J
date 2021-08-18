@@ -1,7 +1,6 @@
 package me.flo.flogger.impl;
 
 import lombok.Getter;
-import me.flo.flogger.types.FlogFormatter;
 import me.flo.flogger.types.FlogRecord;
 
 import java.io.File;
@@ -37,7 +36,7 @@ public class DailyLogFilePublisher extends LogWriterPublisher  {
     }
 
     @Override
-    public void handle(final FlogRecord record, final FlogFormatter formatter) {
+    public void handle(final FlogRecord record) {
         final LocalDate date = LocalDate.now();
 
         if (lastDayOfMonth != -1 && lastDayOfMonth != date.getDayOfMonth()) {
@@ -56,7 +55,7 @@ public class DailyLogFilePublisher extends LogWriterPublisher  {
 
         lastDayOfMonth = date.getDayOfMonth();
 
-        super.handle(record, formatter);
+        super.handle(record);
     }
 
     @SuppressWarnings("unused")
